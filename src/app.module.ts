@@ -6,7 +6,12 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
 
 @Module({
-  imports: [ConfigModule.forRoot(), DatabaseModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: [`.env.${process.env.NODE_ENV ?? 'production'}`, '.env'],
+    }),
+    DatabaseModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
